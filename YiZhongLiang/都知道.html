@@ -1,0 +1,478 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>1-亿中良</title>
+<link href="css/index.css" rel="stylesheet" type="text/css" />
+<link href="css/ny.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script><!-- 进度条 -->
+<!--轮播特效-->
+<script type="text/javascript">
+$(function(){
+        var $banner=$('.banner');
+        var $banner_ul=$('.banner-img');
+        var $btn=$('.banner-btn');
+        var $btn_a=$btn.find('a')
+        var v_width=$banner.width();
+        
+        var page=1;
+        
+        var timer=null;
+        var btnClass=null;
+
+        var page_count=$banner_ul.find('li').length;//把这个值赋给小圆点的个数
+        
+        var banner_cir="<li class='selected' href='#'><a></a></li>";
+        for(var i=1;i<page_count;i++){
+                //动态添加小圆点
+                banner_cir+="<li><a   ></a></li>";
+                }
+        $('.banner-circle').append(banner_cir);
+        
+        var cirLeft=$('.banner-circle').width()*(-0.5);
+        $('.banner-circle').css({'marginLeft':cirLeft});
+        
+        $banner_ul.width(page_count*v_width);
+        
+        function move(obj,classname){
+                //手动及自动播放
+        if(!$banner_ul.is(':animated')){
+                if(classname=='prevBtn'){
+                        if(page==1){
+                                        $banner_ul.animate({left:-v_width*(page_count-1)});
+                                        page=page_count; 
+                                        cirMove();
+                        }
+                        else{
+                                        $banner_ul.animate({left:'+='+v_width},"slow");
+                                        page--;
+                                        cirMove();
+                        }        
+                }
+                else{
+                        if(page==page_count){
+                                        $banner_ul.animate({left:0});
+                                        page=1;
+                                        cirMove();
+                                }
+                        else{
+                                        $banner_ul.animate({left:'-='+v_width},"slow");
+                                        page++;
+                                        cirMove();
+                                }
+                        }
+                }
+        }
+        
+        function cirMove(){
+                //检测page的值，使当前的page与selected的小圆点一致
+                $('.banner-circle li').eq(page-1).addClass('selected')
+                                                                                                .siblings().removeClass('selected');
+        }
+        
+        $banner.mouseover(function(){
+                $btn.css({'display':'block'});
+                clearInterval(timer);
+                                }).mouseout(function(){
+                $btn.css({'display':'none'});                
+                clearInterval(timer);
+                timer=setInterval(move,3000);
+                                }).trigger("mouseout");//激活自动播放
+
+        $btn_a.mouseover(function(){
+                //实现透明渐变，阻止冒泡
+                        $(this).animate({opacity:0.6},'fast');
+                        $btn.css({'display':'block'});
+                         return false;
+                }).mouseleave(function(){
+                        $(this).animate({opacity:0.3},'fast');
+                        $btn.css({'display':'none'});
+                         return false;
+                }).click(function(){
+                        //手动点击清除计时器
+                        btnClass=this.className;
+                        clearInterval(timer);
+                        timer=setInterval(move,3000);
+                        move($(this),this.className);
+                });
+                
+        $('.banner-circle li').live('click',function(){
+                        var index=$('.banner-circle li').index(this);
+                        $banner_ul.animate({left:-v_width*index},'slow');
+                        page=index+1;
+                        cirMove();
+                });
+});
+</script>
+
+<script type="text/javascript" src="js/zzsc.js"></script><!--右侧边浮动导航-->
+
+</head>
+
+<body>
+    <!--header-->
+    <div class="header-top">
+    	<div class="page-top">
+        	<div class="sl_cfrx">
+                <a href="#" class="sl_phone">
+                    <img src="images/sl_01.png" alt=""/>
+                </a>
+                <a href="#" style="color:#fff;" class="sl_k_h">手机客户端</a>
+              
+                <div class="weixin1">
+                    <img src="images/sl_02.png"/>
+                    <div class="xixi">
+                        <img src="images/weixin-1.png" width="100" height="100"/> 
+                    </div>
+                </div>
+            </div>
+            <div class="sl_qdl">
+                <a style="height:40px;float:left;" href="登录.html">登录</a>  
+                <p class="sl_gk"></p>
+                <a href="注册.html">注册</a>
+                <a class="sl_wdzh" href="我的账户.html">我的账户</a>
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- nav -->
+    <div class="nav">
+        <div class="sl_content">
+            <img src="images/sl_03.png" alt="">
+            <div class="menu-wz">
+                <ul>
+                    <li><a class="sl_sy current" href="index.html">首页</a></li>
+                    <li><a href="我要理财.html">我要理财</a></li>         
+                    <li><a href="安全保障.html">安全保障</a></li>
+                    <li><a href="我要融资.html">我要融资</a></li>
+                    <li><a href="都知道.html">都知道</a></li>
+                    <li><a href="积分商城.html">积分商城</a></li>
+                </ul>                                 
+            </div>
+        </div>
+    </div>
+
+
+    <div class="sl_content">
+      <div class="wd-topk">
+        <div class="wd-topleftk">
+       <input type="text" placeholder="充值、提现、手机绑定、等额本息..." > 
+       <a><b><img src="images/ny/wd-ico.png" width="31" height="31"></b></a>
+        </div>
+        <div class="wd-toprightk"><a href="都知道-我要提问.html">我要提问</a></div>
+      </div>
+      <div class="wd-nrk">
+        <div class="wd-nrleftk">
+          <div class="wd-leftk">
+          <h3>理财学院</h3>
+          <div class="banner" >
+	
+	<ul class="banner-img">
+		<li>
+        <dl>
+        <dd><img src="images/ny/wd_03.jpg" width="220" height="135"></dd>
+        <dt><a href="都知道-理财学院.html">在风控方面，地球人有什么特别的优势?</a></dt>
+        </dl>
+        <dl>
+        <dd><img src="images/ny/wd_05.jpg" width="220" height="135"></dd>
+        <dt><a href="都知道-理财学院.html">为保证顺利还款，地球人是如何筛选借款方的？</a></dt>
+        </dl>
+        <dl  style="margin-right:0;">
+        <dd><img src="images/ny/wd_07.jpg" width="220" height="135"></dd>
+        <dt><a href="都知道-理财学院.html">在地球人上投资的项目借款企业出现延后还款怎么办？</a></dt>
+        </dl>
+        </li>
+		<li>
+        <dl>
+        <dd><img src="images/ny/wd_03.jpg" width="220" height="135"></dd>
+        <dt><a href="都知道-理财学院.html">在风控方面，地球人有什么特别的优势?</a></dt>
+        </dl>
+        <dl>
+        <dd><img src="images/ny/wd_05.jpg" width="220" height="135"></dd>
+        <dt><a href="都知道-理财学院.html">为保证顺利还款，地球人是如何筛选借款方的？</a></dt>
+        </dl>
+        <dl  style="margin-right:0;">
+        <dd><img src="images/ny/wd_07.jpg" width="220" height="135"></dd>
+        <dt><a href="都知道-理财学院.html">在地球人上投资的项目借款企业出现延后还款怎么办？</a></dt>
+        </dl>
+        </li>
+		<li>
+        <dl>
+        <dd><img src="images/ny/wd_03.jpg" width="220" height="135"></dd>
+        <dt><a href="都知道-理财学院.html">在风控方面，地球人有什么特别的优势?</a></dt>
+        </dl>
+        <dl>
+        <dd><img src="images/ny/wd_05.jpg" width="220" height="135"></dd>
+        <dt><a href="都知道-理财学院.html">为保证顺利还款，地球人是如何筛选借款方的？</a></dt>
+        </dl>
+        <dl  style="margin-right:0;">
+        <dd><img src="images/ny/wd_07.jpg" width="220" height="135"></dd>
+        <dt><a href="都知道-理财学院.html">在地球人上投资的项目借款企业出现延后还款怎么办？</a></dt>
+        </dl>
+        </li>
+		
+		
+	</ul>
+	<ul class="banner-circle"></ul>
+</div>
+          </div>
+     <div class="box">
+			<ul class="tab_menu">
+				<li class="current">热门提问</li>
+				<li>待解答</li>
+				<li>己解答</li>				
+			</ul>
+			<div class="tab_box">
+				<div>
+					<ul>
+						<li><a href="都知道-问题详细.html" title="">大家是怎么看到地球人的啊，为啥被吸引过来的？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">当我投了一个产品之后，没有到期时无法取出来的吗？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">从什么时候开始计息？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">关于平台的第三方支资托管和安全</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">大家是怎么看到地球人的啊，为啥被吸引过来的？</a><b>34回答 | 15-09-08</b></li>
+                    <li><a href="都知道-问题详细.html" title="">从什么时候开始计息？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">关于平台的第三方支资托管和安全</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">大家是怎么看到地球人的啊，为啥被吸引过来的？</a><b>34回答 | 15-09-08</b></li>    
+                          <li><a href="都知道-问题详细.html" title="">从什么时候开始计息？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">关于平台的第三方支资托管和安全</a><b>34回答 | 15-09-08</b></li>
+				
+				  </ul>
+                 <div class="black2"><a ><</a><span class="current">1</span><a href="#?page=2">2</a><a href="#?page=3">3</a>...<a href="#?page=199">18</a><a href="#?page=200">19</a><a >&gt;</a></div>
+			  </div>
+				<div class="hide">
+					<ul>
+						<li><a href="都知道-问题详细.html" title="">大家是怎么看到地球人的啊，为啥被吸引过来的？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">当我投了一个产品之后，没有到期时无法取出来的吗？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">从什么时候开始计息？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">关于平台的第三方支资托管和安全</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">大家是怎么看到地球人的啊，为啥被吸引过来的？</a><b>34回答 | 15-09-08</b></li>
+                    <li><a href="都知道-问题详细.html" title="">从什么时候开始计息？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">关于平台的第三方支资托管和安全</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">大家是怎么看到地球人的啊，为啥被吸引过来的？</a><b>34回答 | 15-09-08</b></li>    
+                        
+						<li><a href="都知道-问题详细.html" title="">大家是怎么看到地球人的啊，为啥被吸引过来的？</a><b>34回答 | 15-09-08</b></li>    
+				  </ul>
+                    <div class="black2"><a ><</a><span class="current">1</span><a href="#?page=2">2</a><a href="#?page=3">3</a>...<a href="#?page=199">18</a><a href="#?page=200">19</a><a >&gt;</a></div>
+				</div>		
+                <div class="hide">
+					<ul>
+						<li><a href="都知道-问题详细.html" title="">大家是怎么看到地球人的啊，为啥被吸引过来的？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">当我投了一个产品之后，没有到期时无法取出来的吗？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">从什么时候开始计息？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">关于平台的第三方支资托管和安全</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">大家是怎么看到地球人的啊，为啥被吸引过来的？</a><b>34回答 | 15-09-08</b></li>
+                    <li><a href="都知道-问题详细.html" title="">从什么时候开始计息？</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">关于平台的第三方支资托管和安全</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">大家是怎么看到地球人的啊，为啥被吸引过来的？</a><b>34回答 | 15-09-08</b></li>    
+                        <li><a href="都知道-问题详细.html" title="">关于平台的第三方支资托管和安全</a><b>34回答 | 15-09-08</b></li>
+						<li><a href="都知道-问题详细.html" title="">大家是怎么看到地球人的啊，为啥被吸引过来的？</a><b>34回答 | 15-09-08</b></li>    
+					</ul>
+                    <div class="black2"><a ><</a><span class="current">1</span><a href="#?page=2">2</a><a href="#?page=3">3</a>...<a href="#?page=199">18</a><a href="#?page=200">19</a><a >&gt;</a></div>
+				</div>				
+			</div>
+		</div>
+        </div>
+        <div class="wd-nrrightk">
+          <div class="wd-righttopk">
+          <dl>
+          <dd><img src="images/ny/wd.png" width="127" height="127"></dd>
+          <dt>
+          <p>15012345678</p>
+          <span>普通会员</span>
+          </dt>
+          </dl>
+          <div class="wd-r-wz">
+          <ul style="border-right:1px solid #e6e6e6;">
+          <li>
+          <b>0</b>
+          <em><a href="都知道-我的提问、回答.html">我的提问</a></em>
+          </li>
+          </ul>
+          <ul>
+          <li>
+          <b>12</b>
+          <em><a href="都知道-我的提问、回答.html">我的回答</a></em>
+          </li>
+          </ul>
+          </div>
+          </div>
+          <div class="wd-r-rmk">
+          <div class="wd-bq-bao">
+<h3>热门标签</h3>
+          <div class="wd-r-bqk">
+          <a href="#" class="cuttent">地球人</a>
+          <a href="#">互联网金融</a>
+          <a href="#">提现</a>
+           <a href="#">自动投标</a>
+          <a href="#">本息担保</a>
+          <a href="#">风险控制</a>
+           <a href="#">第三方资金托管</a>
+          <a href="#">自动投标</a>
+          <a href="#">互联网金融</a>
+          </div>
+  </div>
+          <div class="tzphb-k">
+          <p><span>投资排行榜</span> <a class="cuttent" href="#">周</a><a href="#">月</a></p>
+          <ul>
+          <li>
+          <b>1</b>
+          <span>张*</span>
+          <em>￥510,230.00</em>
+          </li>
+           <li>
+          <b class="ph-er">2</b>
+          <span>if**</span>
+          <em>￥510,230.00</em>
+          </li>
+           <li>
+          <b class="ph-san">3</b>
+          <span>xs*</span>
+          <em>￥510,230.00</em>
+          </li>
+           <li>
+          <b class="ph-si">4</b>
+          <span>李*</span>
+          <em>￥510,230.00</em>
+          </li>
+          <li>
+          <b class="ph-si">5</b>
+          <span>弛*</span>
+          <em>￥510,230.00</em>
+          </li>
+          <li>
+          <b class="ph-si">6</b>
+          <span>张*</span>
+          <em>￥510,230.00</em>
+          </li>
+          <li>
+          <b class="ph-si">7</b>
+          <span>张*</span>
+          <em>￥510,230.00</em>
+          </li>
+          <li>
+          <b class="ph-si">8</b>
+          <span>张*</span>
+          <em>￥510,230.00</em>
+          </li>
+          </ul>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+
+    <!-- footer -->
+    <div class="sl_footer">
+        <div class="sl_footer_top">
+            <div class="sl_content">
+                <div style="overflow:hidden;">
+                    <div class="sl_bzzx">
+                        <dl>
+                            <dt>帮助中心</dt>
+                            <dd><a href="">注册</a></dd>
+                            <dd><a href="">投资</a></dd>
+                            <dd><a href="">常见问题</a></dd>
+                        </dl>
+                         <dl>
+                            <dt>服务说明</dt>
+                            <dd><a href="">资费说明</a></dd>
+                            <dd><a href="">政策法规</a></dd>
+                            <dd><a href="">名词解释</a></dd>
+                        </dl>
+                         <dl>
+                            <dt>安全保障</dt>
+                            <dd><a href="">风险保障</a></dd>
+                            <dd><a href="">隐私说明</a></dd>
+                        </dl>
+                         <dl>
+                            <dt>地球人</dt>
+                            <dd><a href="">都知道</a></dd>
+                            <dd><a href="">精英团队</a></dd>
+                            <dd><a href="">联系我们</a></dd>
+                        </dl>
+                    </div>
+                    <div class="sl_bzwx">
+                        <h1>关注我们微信</h1>
+                        <img style="margin-top: 14px;" src="images/sl_27.png" alt="">
+                    </div>
+                    <div class="sl_lcjl_top">
+                        <div class="sl_lcjl">
+                            <img src="images/sl_28.png" alt="">
+                            <span>
+                                400-666-8888
+                                <ul class="sl_zyzw">
+                                    <li>周一到周五</li>  
+                                    <li>8:00-21:00 </li>
+                                    <li style="margin-right:0;">周末 9:30-17:00</li>
+                                </ul>
+                            </span>
+                        </div>
+                        <p class="sl_qq_qun">
+                            理财交流QQ群：123456789  <b> 987654321</b>
+                        </p>
+                    </div>
+                </div>
+                <ul class="sl_yqlj">
+                    <li><a href="#">友情链接</a></li>
+                    <li>●</li>
+                    <li><a href="#">英科信息</a></li>
+                    <li>●</li>
+                    <li><a href="#">网贷中国</a></li>
+                    <li>●</li>
+                    <li><a href="#">网贷之家</a></li>
+                    <li>●</li>
+                    <li><a href="#">英科信息</a></li>
+                    <li>●</li>
+                    <li><a href="#">网贷中国</a></li>
+                    <li>●</li>
+                    <li><a href="#">网贷之家</a></li>
+                    <li>●</li>
+                    <li><a href="#">英科信息</a></li>
+                    <li>●</li>
+                    <li><a href="#">网贷中国</a></li>
+                    <li>●</li>
+                    <li><a href="#">网贷之家</a></li>
+                    <li>●</li>
+                    <li><a href="#">英科信息</a></li>
+                    <li>●</li>
+                     <li><a href="#">网贷中国</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sl_footer_bottom">
+            <div class="sl_content">
+                <ul class="sl_aqlm">
+                    <li>
+                        <img style="margin-top:-8px;" src="images/sl_29.png" alt="">
+                    </li>
+                     <li>
+                        <img src="images/sl_30.png" alt="">
+                    </li>
+                     <li>
+                        <img src="images/sl_31.png" alt="">
+                    </li>
+                     <li>
+                        <img src="images/sl_32.png" alt="">
+                    </li>
+                </ul>
+                <P class="sl_yj">公司地址：上海杨浦区淞沪路五角丰达48号702室<br/>
+                Copyright @2014 上海主林金融信息有限公司 版权所有　沪ICP备12036190号-1</P>
+            </div>
+        </div>
+    </div>
+
+    <div id="top"><div id="izl_rmenu" class="izl-rmenu"><a href="这里写在线客服的链接" class="btn btn-qq"></a><div class="btn btn-wx"><img class="pic" src="images/weixin.jpg" onclick="window.location.href=''"></div><div class="btn btn-phone"><div class="phone">400-888-888</div></div><div class="btn btn-top" style="display: block;"></div></div></div>
+    
+ <script src="js/jquery.tabs.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.box').Tabs({
+		event:'click'
+	});
+
+});	
+</script>
+</body>
+</html>
